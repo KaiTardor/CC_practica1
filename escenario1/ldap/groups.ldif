@@ -1,0 +1,8 @@
+dn: ou=groups,dc=practice1,dc=local
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=cloudusers,ou=groups,dc=practice1,dc=local
+objectClass: groupOfNames
+cn: cloudusers
+member: uid=prueba1,ou=users,dc=practice1,dc=local

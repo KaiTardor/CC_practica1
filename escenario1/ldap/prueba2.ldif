@@ -1,0 +1,13 @@
+dn: uid=prueba2,ou=users,dc=practice1,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Dos
+sn: Dos
+givenName: Prueba
+uid: prueba2
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/prueba2
+mail: prueba2@practice1.local
+userPassword: prueba2
