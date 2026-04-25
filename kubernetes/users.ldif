@@ -1,0 +1,31 @@
+dn: ou=users,dc=practice1,dc=local
+objectClass: organizationalUnit
+ou: users
+
+dn: uid=prueba1,ou=users,dc=practice1,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Uno
+sn: Uno
+givenName: Prueba
+uid: prueba1
+uidNumber: 13001
+gidNumber: 13001
+homeDirectory: /home/prueba1
+mail: prueba1@practice1.local
+userPassword: prueba1
+
+dn: uid=prueba2,ou=users,dc=practice1,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Dos
+sn: Dos
+givenName: Prueba
+uid: prueba2
+uidNumber: 13002
+gidNumber: 13002
+homeDirectory: /home/prueba2
+mail: prueba2@practice1.local
+userPassword: prueba2

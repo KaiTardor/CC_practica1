@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: practice1-config
+  namespace: practice1
+data:
+  OWNCLOUD_DOMAIN: "minikube"
+  OWNCLOUD_ADMIN_USERNAME: "admin"
+
+  MARIADB_DATABASE: "owncloud"
+  MARIADB_USER: "owncloud"
+
+  LDAP_ORGANISATION: "UGR Practice1 Kubernetes"
+  LDAP_DOMAIN: "practice1.local"

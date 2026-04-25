@@ -1,0 +1,77 @@
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: docker-mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+      MYSQL_USER: ${MARIADB_USER}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - owncloud_net
+
+  redis:
+    image: redis:7
+    container_name: docker-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - owncloud_net
+
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: docker-openldap
+    restart: unless-stopped
+    environment:
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION}
+      LDAP_DOMAIN: ${LDAP_DOMAIN}
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+    ports:
+      - "${LDAP_PORT}:389"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+    networks:
+      - owncloud_net
+
+  owncloud:
+    image: owncloud/server:10.15.3
+    container_name: docker-owncloud
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - redis
+      - openldap
+    ports:
+      - "${OWNCLOUD_PORT}:8080"
+    environment:
+      OWNCLOUD_DOMAIN: ${OWNCLOUD_DOMAIN}
+      OWNCLOUD_DB_TYPE: mysql
+      OWNCLOUD_DB_NAME: ${MARIADB_DATABASE}
+      OWNCLOUD_DB_USERNAME: ${MARIADB_USER}
+      OWNCLOUD_DB_PASSWORD: ${MARIADB_PASSWORD}
+      OWNCLOUD_DB_HOST: mariadb
+      OWNCLOUD_ADMIN_USERNAME: ${OWNCLOUD_ADMIN_USERNAME}
+      OWNCLOUD_ADMIN_PASSWORD: ${OWNCLOUD_ADMIN_PASSWORD}
+      OWNCLOUD_REDIS_ENABLED: "true"
+      OWNCLOUD_REDIS_HOST: redis
+    volumes:
+      - owncloud_data:/mnt/data
+    networks:
+      - owncloud_net
+
+volumes:
+  mariadb_data:
+  redis_data:
+  ldap_data:
+  ldap_config:
+  owncloud_data:
+
+networks:
+  owncloud_net:
+    driver: bridge
