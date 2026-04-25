@@ -31,8 +31,6 @@ practice1/
 ├── docs/
 ├── ldap/
 │   └── users.ldif      # fichero LDIF con usuarios de prueba para OpenLDAP
-├── mariadb/
-├── owncloud/
 ├── .env                # variables de entorno del despliegue
 └── compose.yaml        # definición de los servicios, red y volúmenes
 ```

@@ -1,0 +1,119 @@
+name: escenario2
+
+services:
+  mariadb:
+    image: docker.io/library/mariadb:11
+    container_name: escenario2-mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+      MYSQL_USER: ${MARIADB_USER}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - owncloud_net
+
+  redis:
+    image: docker.io/library/redis:7
+    container_name: escenario2-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - owncloud_net
+
+  openldap:
+    image: docker.io/osixia/openldap:1.5.0
+    container_name: escenario2-openldap
+    restart: unless-stopped
+    environment:
+      LDAP_ORGANISATION: ${LDAP_ORGANISATION}
+      LDAP_DOMAIN: ${LDAP_DOMAIN}
+      LDAP_ADMIN_PASSWORD: ${LDAP_ADMIN_PASSWORD}
+    ports:
+      - "${LDAP_PORT}:389"
+    volumes:
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+    networks:
+      - owncloud_net
+
+  owncloud1:
+    image: docker.io/owncloud/server:10.15.3
+    container_name: escenario2-owncloud1
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - redis
+      - openldap
+    ports:
+      - "${OWNCLOUD1_PORT}:8080"
+    environment:
+      OWNCLOUD_DOMAIN: ${OWNCLOUD_DOMAIN}
+      OWNCLOUD_DB_TYPE: mysql
+      OWNCLOUD_DB_NAME: ${MARIADB_DATABASE}
+      OWNCLOUD_DB_USERNAME: ${MARIADB_USER}
+      OWNCLOUD_DB_PASSWORD: ${MARIADB_PASSWORD}
+      OWNCLOUD_DB_HOST: mariadb
+      OWNCLOUD_ADMIN_USERNAME: ${OWNCLOUD_ADMIN_USERNAME}
+      OWNCLOUD_ADMIN_PASSWORD: ${OWNCLOUD_ADMIN_PASSWORD}
+      OWNCLOUD_REDIS_ENABLED: "true"
+      OWNCLOUD_REDIS_HOST: redis
+    volumes:
+      - owncloud_data:/mnt/data
+    networks:
+      - owncloud_net
+
+  owncloud2:
+    image: docker.io/owncloud/server:10.15.3
+    container_name: escenario2-owncloud2
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+      - redis
+      - openldap
+    ports:
+      - "${OWNCLOUD2_PORT}:8080"
+    environment:
+      OWNCLOUD_DOMAIN: ${OWNCLOUD_DOMAIN}
+      OWNCLOUD_DB_TYPE: mysql
+      OWNCLOUD_DB_NAME: ${MARIADB_DATABASE}
+      OWNCLOUD_DB_USERNAME: ${MARIADB_USER}
+      OWNCLOUD_DB_PASSWORD: ${MARIADB_PASSWORD}
+      OWNCLOUD_DB_HOST: mariadb
+      OWNCLOUD_ADMIN_USERNAME: ${OWNCLOUD_ADMIN_USERNAME}
+      OWNCLOUD_ADMIN_PASSWORD: ${OWNCLOUD_ADMIN_PASSWORD}
+      OWNCLOUD_REDIS_ENABLED: "true"
+      OWNCLOUD_REDIS_HOST: redis
+    volumes:
+      - owncloud_data:/mnt/data
+    networks:
+      - owncloud_net
+
+  haproxy:
+    image: docker.io/library/haproxy:3.0
+    container_name: escenario2-haproxy
+    restart: unless-stopped
+    depends_on:
+      - owncloud1
+      - owncloud2
+    ports:
+      - "${HAPROXY_PORT}:8080"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy:ro,Z
+    networks:
+      - owncloud_net
+
+volumes:
+  mariadb_data:
+  redis_data:
+  ldap_data:
+  ldap_config:
+  owncloud_data:
+
+networks:
+  owncloud_net:
+    driver: bridge

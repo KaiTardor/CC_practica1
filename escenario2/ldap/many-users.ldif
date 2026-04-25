@@ -1,0 +1,73 @@
+dn: ou=users,dc=practice2,dc=local
+objectClass: organizationalUnit
+ou: users
+
+dn: uid=prueba1,ou=users,dc=practice2,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Uno
+sn: Uno
+givenName: Prueba
+uid: prueba1
+uidNumber: 11001
+gidNumber: 11001
+homeDirectory: /home/prueba1
+mail: prueba1@practice2.local
+userPassword: prueba1
+
+dn: uid=prueba2,ou=users,dc=practice2,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Dos
+sn: Dos
+givenName: Prueba
+uid: prueba2
+uidNumber: 11002
+gidNumber: 11002
+homeDirectory: /home/prueba2
+mail: prueba2@practice2.local
+userPassword: prueba2
+
+dn: uid=prueba3,ou=users,dc=practice2,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Tres
+sn: Tres
+givenName: Prueba
+uid: prueba3
+uidNumber: 11003
+gidNumber: 11003
+homeDirectory: /home/prueba3
+mail: prueba3@practice2.local
+userPassword: prueba3
+
+dn: uid=prueba4,ou=users,dc=practice2,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Cuatro
+sn: Cuatro
+givenName: Prueba
+uid: prueba4
+uidNumber: 11004
+gidNumber: 11004
+homeDirectory: /home/prueba4
+mail: prueba4@practice2.local
+userPassword: prueba4
+
+dn: uid=prueba5,ou=users,dc=practice2,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: Prueba Cinco
+sn: Cinco
+givenName: Prueba
+uid: prueba5
+uidNumber: 11005
+gidNumber: 11005
+homeDirectory: /home/prueba5
+mail: prueba5@practice2.local
+userPassword: prueba5
