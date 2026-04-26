@@ -8,13 +8,13 @@ El objetivo general del proyecto es construir y documentar distintas soluciones 
 El desarrollo y validación de la práctica se ha realizado principalmente en el servidor `docker.ugr.es`, utilizando un entorno basado en Linux y herramientas de contenedores como Podman y podman-compose.
 
 ### Herramientas adicionales utilizadas
-- kubectl
-- minikube
-- HAProxy
-- OpenLDAP
-- MariaDB
-- Redis
-- ownCloud
+- **kubectl**: `v1.35.3`
+- **minikube**: `v1.38.1`
+- **HAProxy**: `3.0`
+- **OpenLDAP**: `1.5.0`
+- **MariaDB**: `11`
+- **Redis**: `7`
+- **ownCloud**: `10.15.3`
 
 
 ## Estructura del repositorio
