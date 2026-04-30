@@ -1,7 +1,7 @@
 # Práctica 1 - Despliegue con Kubernetes
 
 ## Descripción general
-Replica del escenario básico pero en vez de utilizar podman-compose, se utiliza el docker compose.
+Replica del escenario básico pero en vez de utilizar podman-compose, se utiliza el Kubernetes (Minikube).
 
 Para más información, véase el [README del escenario 1](../escenario1/README.md).
 
